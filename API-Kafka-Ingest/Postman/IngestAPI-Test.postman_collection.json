@@ -1,0 +1,144 @@
+{
+	"info": {
+		"_postman_id": "793bf228-6eb4-497b-9859-355a2251ab4a",
+		"name": "API_Kafka_Ingest-Test",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Test Validation - Business",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"business_id\": \"QdN72BWoyFypdGJhhI5r7g\", \"name\": \"Bar One\", \"address\": \"767 S 9th St\", \"city\": \"Philadelphia\", \"state\": \"PA\", \"postal_code\": \"19147\", \"latitude\": 39.9398245705, \"longitude\": -75.1574465632, \"stars\": 4.0, \"review_count\": 65, \"is_open\": 0, \"attributes\": {\"Smoking\": \"no\", \"NoiseLevel\": \"average\", \"Caters\": \"False\", \"WiFi\": \"free\", \"RestaurantsGoodForGroups\": \"True\", \"Music\": {\"dj\": false, \"background_music\": false, \"no_music\": false, \"jukebox\": false, \"live\": false, \"video\": false, \"karaoke\": false}, \"OutdoorSeating\": \"False\", \"RestaurantsTableService\": \"True\", \"RestaurantsAttire\": \"casual\", \"Ambience\": {\"touristy\": false, \"hipster\": true, \"romantic\": null, \"divey\": false, \"intimate\": false, \"trendy\": null, \"upscale\": false, \"classy\": null, \"casual\": true}, \"RestaurantsReservations\": \"False\", \"RestaurantsTakeOut\": \"True\", \"GoodForDancing\": \"False\", \"RestaurantsPriceRange2\": \"2\", \"GoodForMeal\": {\"dessert\": false, \"latenight\": false, \"lunch\": false, \"dinner\": false, \"brunch\": true, \"breakfast\": false}, \"GoodForKids\": \"False\", \"HappyHour\": \"True\", \"RestaurantsDelivery\": \"True\", \"BusinessParking\": {\"garage\": null, \"street\": true, \"validated\": null, \"lot\": false, \"valet\": false}, \"BikeParking\": \"True\", \"BusinessAcceptsCreditCards\": \"True\", \"HasTV\": \"True\", \"Alcohol\": \"full_bar\"}, \"categories\": [\"Cocktail Bars\", \"Bars\", \"Italian\", \"Nightlife\", \"Restaurants\"], \"hours\": {\"Monday\": \"16:0-0:0\", \"Tuesday\": \"16:0-0:0\", \"Wednesday\": \"16:0-0:0\", \"Thursday\": \"12:0-0:0\", \"Friday\": \"12:0-2:0\", \"Saturday\": \"11:0-2:0\", \"Sunday\": \"11:0-0:0\"}}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8000/business",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"business"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Test Validation - Checkin",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"business_id\": \"--sXnWH9Xm6_NvIjyuA99w\", \"date\": 970}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8000/checkin",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"checkin"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Test Validation - Review",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"review_id\":\"KU_O5udG6zpxOg-VcAEodg\",\"user_id\":\"mh_-eMZ6K5RLWhZyISBhwA\",\"business_id\":\"XQfwVwDr-v0ZS3_CbbE5Xw\",\"stars\":3.0,\"useful\":0,\"funny\":0,\"cool\":0,\"text\":\"If you decide to eat here, just be aware it is going to take about 2 hours from beginning to end. We have tried it multiple times, because I want to like it! I have been to it's other locations in NJ and never had a bad experience. The food is good, but it takes a very long time to come out. The waitstaff is very young, but usually pleasant. We have just had too many experiences where we spent way too long waiting. We usually opt for another diner or restaurant on the weekends, in order to be done quicker.\",\"date\":\"2018-07-07 22:09:11\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8000/review",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"review"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Test Validation - Tip",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"user_id\":\"AGNUgVwnZUey3gcPCJ76iw\",\"business_id\":\"3uLgwr0qeCNMjKenHJwPGQ\",\"text\":\"Avengers time with the ladies.\",\"date\":\"2012-05-18 02:17:21\",\"compliment_count\":0}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8000/tip",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"tip"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Test Validation - User",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"user_id\": \"qVc8ODYU5SZjKXVBgXdI7w\", \"name\": \"Walker\", \"review_count\": 585, \"yelping_since\": \"2007-01-25 16:47:26\", \"useful\": 7217, \"funny\": 1259, \"cool\": 5994, \"elite\": \"2007\", \"friends\": 14995, \"fans\": 267, \"average_stars\": 3.91, \"compliment_hot\": 250, \"compliment_more\": 65, \"compliment_profile\": 55, \"compliment_cute\": 56, \"compliment_list\": 18, \"compliment_note\": 232, \"compliment_plain\": 844, \"compliment_cool\": 467, \"compliment_funny\": 467, \"compliment_writer\": 239, \"compliment_photos\": 180}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8000/user",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"user"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

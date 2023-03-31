@@ -1,0 +1,18 @@
+
+config
+data
+gfdata
+python/data
+
+# .idea
+.idea
+.idea/modules.xml
+.idea/misc.xml
+.idea/inspectionProfiles/profiles_settings.xml
+.idea/inspectionProfiles/Project_Default.xml
+.idea/timeseries-data.iml
+.idea/vcs.xml
+.idea/.gitignore
+
+# Local Data
+dataset

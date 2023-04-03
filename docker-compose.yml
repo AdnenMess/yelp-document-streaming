@@ -1,11 +1,15 @@
 version: "3"
 services:
+ 
   zookeeper:
     image: 'bitnami/zookeeper:latest'
     ports:
       - '2181:2181'
     environment:
       - ALLOW_ANONYMOUS_LOGIN=yes
+    networks:
+      - document-streaming
+
   kafka:
     image: 'bitnami/kafka:latest'
     ports:
@@ -20,3 +24,17 @@ services:
       - KAFKA_INTER_BROKER_LISTENER_NAME=CLIENT
     depends_on:
       - zookeeper
+    networks:
+      - document-streaming
+
+  api-ingest:
+    image: 'api-kafka-ingest'
+    ports:
+       - '80:80'
+    networks:
+      - document-streaming
+
+networks:
+  document-streaming:
+    driver: bridge
+  

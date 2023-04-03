@@ -1,6 +1,5 @@
 import json
 
-import uvicorn
 from fastapi import FastAPI
 from fastapi.responses import JSONResponse
 from fastapi.encoders import jsonable_encoder
@@ -88,25 +87,17 @@ async def send_to_kafka(value):
     # linger_ms=500, producer will wait up to half a second before sending a batch of messages to improve performance
     # by reducing the number of network round trips required to send messages
 
-    # Create producer if we work on localhost
+    # Create producer
+    # bootstrap_servers='localhost:9093' if we work on localhost
+    # bootstrap_servers='kafka:9092' if we work on Docker
+
     producer = KafkaProducer(
-        bootstrap_servers='localhost:9093',
+        bootstrap_servers='kafka:9092',
         acks=1,
         linger_ms=500
     )
-    # Create producer if we work on docker container
-    # producer = KafkaProducer(
-    #     bootstrap_servers='kafka:9092',
-    #     acks=1,
-    #     linger_ms=500
-    # )
-    # Convert JSON string to bytes
 
     # Send the message to Kafka
     producer.send("Yelp-topic", bytes(value, 'utf-8'))
 
     producer.flush()
-
-
-# Start the server of FastAPI on the localhost
-uvicorn.run(app, host="127.0.0.1", port=8000)

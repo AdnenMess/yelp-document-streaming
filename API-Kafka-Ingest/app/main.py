@@ -23,10 +23,10 @@ async def create_business(business: Business):
     business_obj = Business(**business)
 
     # Flatten the object
-    flat_business = flatten(business_obj.dict(), separator='.')
+    flat_business = flatten(business_obj.dict(), separator='_')
 
     # Send the data to Kafka
-    await send_to_kafka(json.dumps(flat_business))
+    await send_to_kafka(json.dumps(flat_business), key='business')
 
     return JSONResponse(content=jsonable_encoder(flat_business), status_code=201)
 
@@ -39,7 +39,7 @@ async def create_checkin(checkin: Checkin):
     checkin_obj = Checkin(**checkin)
 
     # Send the data to Kafka
-    await send_to_kafka(json.dumps(checkin))
+    await send_to_kafka(json.dumps(checkin), key='checkin')
 
     return JSONResponse(content=dict(checkin_obj), status_code=201)
 
@@ -52,7 +52,7 @@ async def create_review(review: Review):
     review_obj = Review(**review)
 
     # Send the data to Kafka
-    await send_to_kafka(json.dumps(review))
+    await send_to_kafka(json.dumps(review), key='review')
 
     return JSONResponse(content=dict(review_obj), status_code=201)
 
@@ -65,7 +65,7 @@ async def create_review(tip: Tip):
     tip_obj = Tip(**tip)
 
     # Send the data to Kafka
-    await send_to_kafka(json.dumps(tip))
+    await send_to_kafka(json.dumps(tip), key='tip')
 
     return JSONResponse(content=dict(tip_obj), status_code=201)
 
@@ -78,12 +78,12 @@ async def create_review(user: User):
     user_obj = User(**user)
 
     # Send the data to Kafka
-    await send_to_kafka(json.dumps(user))
+    await send_to_kafka(json.dumps(user), key='user')
 
     return JSONResponse(content=dict(user_obj), status_code=201)
 
 
-async def send_to_kafka(value):
+async def send_to_kafka(value, key=None):
     # linger_ms=500, producer will wait up to half a second before sending a batch of messages to improve performance
     # by reducing the number of network round trips required to send messages
 
@@ -98,6 +98,6 @@ async def send_to_kafka(value):
     )
 
     # Send the message to Kafka
-    producer.send("Yelp-topic", bytes(value, 'utf-8'))
+    producer.send("Yelp-topic", key=bytes(key, 'utf-8') if key else None, value=bytes(value, 'utf-8'))
 
     producer.flush()

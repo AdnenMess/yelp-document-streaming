@@ -46,39 +46,40 @@ class AttributeBusinessParking(BaseModel):
 
 
 class BusinessAttributes(BaseModel):
-    Smoking: str
-    NoiseLevel: str
-    Caters: str
-    WiFi: str
-    RestaurantsGoodForGroups: str
-    Music: AttributesMusic
-    OutdoorSeating: str
-    RestaurantsTableService: str
-    RestaurantsAttire: str
-    Ambience: AttributesAmbience
-    RestaurantsReservations: str
-    RestaurantsTakeOut: str
-    GoodForDancing: str
-    RestaurantsPriceRange2: str
-    GoodForMeal: AttributeGoodForMeal
-    GoodForKids: str
-    HappyHour: str
-    RestaurantsDelivery: str
-    BusinessParking: AttributeBusinessParking
-    BikeParking: str
-    BusinessAcceptsCreditCards: str
-    HasTV: str
-    Alcohol: str
+    Smoking: Optional[str]
+    NoiseLevel: Optional[str]
+    Caters: Optional[str]
+    WiFi: Optional[str]
+    RestaurantsGoodForGroups: Optional[str]
+    Music: Optional[AttributesMusic]
+    OutdoorSeating: Optional[str]
+    RestaurantsTableService: Optional[str]
+    RestaurantsAttire: Optional[str]
+    Ambience: Optional[AttributesAmbience]
+    RestaurantsReservations: Optional[str]
+    RestaurantsTakeOut: Optional[str]
+    GoodForDancing: Optional[str]
+    RestaurantsPriceRange2: Optional[str]
+    GoodForMeal: Optional[AttributeGoodForMeal]
+    GoodForKids: Optional[str]
+    HappyHour: Optional[str]
+    RestaurantsDelivery: Optional[str]
+    BusinessParking: Optional[AttributeBusinessParking]
+    BikeParking: Optional[str]
+    BusinessAcceptsCreditCards: Optional[str]
+    HasTV: Optional[str]
+    Alcohol: Optional[str]
+    ByAppointmentOnly: Optional[str]
 
 
 class BusinessHours(BaseModel):
-    Monday: str
-    Tuesday: str
-    Wednesday: str
-    Thursday: str
-    Friday: str
-    Saturday: str
-    Sunday: str
+    Monday: Optional[str]
+    Tuesday: Optional[str]
+    Wednesday: Optional[str]
+    Thursday: Optional[str]
+    Friday: Optional[str]
+    Saturday: Optional[str]
+    Sunday: Optional[str]
 
 
 # The main class
@@ -93,9 +94,9 @@ class Business(BaseModel):
     stars: float
     review_count: int
     is_open: int
-    attributes: BusinessAttributes
+    attributes: Optional[BusinessAttributes]
     categories: List[str]
-    hours: BusinessHours
+    hours: Optional[BusinessHours]
 
 
 '''

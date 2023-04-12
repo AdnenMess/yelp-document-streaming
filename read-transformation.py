@@ -47,6 +47,7 @@ def fix_json_formatting(input_file: str, output_file: str):
 
             categories = data.get('categories')
             if categories:
+                data['categories'] = data['categories'].replace(r"\/", ", ")
                 data['categories'] = categories.split(', ')
 
             # Write the cleaned JSON object to the output file

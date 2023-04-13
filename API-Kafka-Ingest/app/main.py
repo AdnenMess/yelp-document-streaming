@@ -22,8 +22,19 @@ async def create_business(business: Business):
     business = business.dict()
     business_obj = Business(**business)
 
-    # Flatten the object
-    flat_business = flatten(business_obj.dict(), separator='_')
+    # Flatten the categories
+    flat_categories = {'categories_' + str(i): category for i, category in enumerate(business_obj.categories)}
+
+    # Flatten the hours
+    flat_hours = {}
+    if business_obj.hours:
+        flat_hours = flatten(business_obj.hours.dict(), separator='_')
+
+    # Merge the flattened fields
+    flat_business = {**flat_categories, **flat_hours}
+
+    # Add the remaining fields
+    flat_business.update({k: v for k, v in business_obj.dict().items() if k not in ['categories', 'hours']})
 
     # Send the data to Kafka
     await send_to_kafka(json.dumps(flat_business), key='business')

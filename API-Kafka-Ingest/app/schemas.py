@@ -1,75 +1,9 @@
-from typing import Optional, List
+from typing import Optional, List, Dict, Any
 from pydantic import BaseModel
 
 '''
 Define all Classes for Business BaseModel
 '''
-
-
-class AttributesMusic(BaseModel):
-    dj: Optional[bool]
-    background_music: Optional[bool]
-    no_music: Optional[bool]
-    jukebox: Optional[bool]
-    live: Optional[bool]
-    video: Optional[bool]
-    karaoke: Optional[bool]
-
-
-class AttributesAmbience(BaseModel):
-    touristy: Optional[bool]
-    hipster: Optional[bool]
-    romantic: Optional[bool]
-    divey: Optional[bool]
-    intimate: Optional[bool]
-    trendy: Optional[bool]
-    upscale: Optional[bool]
-    classy: Optional[bool]
-    casual: Optional[bool]
-
-
-class AttributeGoodForMeal(BaseModel):
-    dessert: Optional[bool]
-    latenight: Optional[bool]
-    lunch: Optional[bool]
-    dinner: Optional[bool]
-    brunch: Optional[bool]
-    breakfast: Optional[bool]
-
-
-class AttributeBusinessParking(BaseModel):
-    garage: Optional[bool]
-    street: Optional[bool]
-    validated: Optional[bool]
-    lot: Optional[bool]
-    valet: Optional[bool]
-
-
-class BusinessAttributes(BaseModel):
-    Smoking: Optional[str]
-    NoiseLevel: Optional[str]
-    Caters: Optional[str]
-    WiFi: Optional[str]
-    RestaurantsGoodForGroups: Optional[str]
-    Music: Optional[AttributesMusic]
-    OutdoorSeating: Optional[str]
-    RestaurantsTableService: Optional[str]
-    RestaurantsAttire: Optional[str]
-    Ambience: Optional[AttributesAmbience]
-    RestaurantsReservations: Optional[str]
-    RestaurantsTakeOut: Optional[str]
-    GoodForDancing: Optional[str]
-    RestaurantsPriceRange2: Optional[str]
-    GoodForMeal: Optional[AttributeGoodForMeal]
-    GoodForKids: Optional[str]
-    HappyHour: Optional[str]
-    RestaurantsDelivery: Optional[str]
-    BusinessParking: Optional[AttributeBusinessParking]
-    BikeParking: Optional[str]
-    BusinessAcceptsCreditCards: Optional[str]
-    HasTV: Optional[str]
-    Alcohol: Optional[str]
-    ByAppointmentOnly: Optional[str]
 
 
 class BusinessHours(BaseModel):
@@ -94,9 +28,14 @@ class Business(BaseModel):
     stars: float
     review_count: int
     is_open: int
-    attributes: Optional[BusinessAttributes]
+    attributes: Dict[str, Any]
     categories: List[str]
     hours: Optional[BusinessHours]
+
+    # The Config class inside DynamicModel allows arbitrary types to be allowed,
+    # which means any type can be assigned to the attributes field.
+    class Config:
+        arbitrary_types_allowed = True
 
 
 '''

@@ -28,7 +28,7 @@ class Business(BaseModel):
     stars: float
     review_count: int
     is_open: int
-    attributes: Dict[str, Any]
+    attributes: Optional[Dict[str, Any]]
     categories: List[str]
     hours: Optional[BusinessHours]
 

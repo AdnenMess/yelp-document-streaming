@@ -3,7 +3,7 @@ from pathlib import Path
 from ast import literal_eval
 from json.decoder import JSONDecodeError
 
-folder = Path.cwd() / 'dataset'
+folder = Path.cwd().parent / 'dataset' / 'short_data'
 files = folder.glob("*.json")
 
 business = str(next(files))
@@ -12,7 +12,7 @@ review = str(next(files))
 tip = str(next(files))
 user = str(next(files))
 
-out_folder = Path.cwd() / 'dataset'
+out_folder = Path.cwd().parent / 'dataset' / 'short_data'
 out_file_business = str(out_folder / 'Clean Data' / 'yelp_output_business.json')
 out_file_checkin = str(out_folder / 'Clean Data' / 'yelp_output_checkin.json')
 out_file_user = str(out_folder / 'Clean Data' / 'yelp_output_user.json')

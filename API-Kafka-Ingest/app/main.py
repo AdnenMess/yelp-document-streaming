@@ -7,6 +7,7 @@ from schemas import Business, Checkin, Review, Tip, User
 from flatten_json import flatten
 from kafka import KafkaProducer
 
+
 app = FastAPI()
 
 
@@ -37,7 +38,7 @@ async def create_business(business: Business):
     flat_business.update({k: v for k, v in business_obj.dict().items() if k not in ['categories', 'hours']})
 
     # Send the data to Kafka
-    await send_to_kafka(json.dumps(flat_business), key='business')
+    send_to_kafka(json.dumps(flat_business))
 
     return JSONResponse(content=jsonable_encoder(flat_business), status_code=201)
 
@@ -50,7 +51,7 @@ async def create_checkin(checkin: Checkin):
     checkin_obj = Checkin(**checkin)
 
     # Send the data to Kafka
-    await send_to_kafka(json.dumps(checkin), key='checkin')
+    send_to_kafka(json.dumps(checkin))
 
     return JSONResponse(content=dict(checkin_obj), status_code=201)
 
@@ -63,7 +64,7 @@ async def create_review(review: Review):
     review_obj = Review(**review)
 
     # Send the data to Kafka
-    await send_to_kafka(json.dumps(review), key='review')
+    send_to_kafka(json.dumps(review))
 
     return JSONResponse(content=dict(review_obj), status_code=201)
 
@@ -76,7 +77,7 @@ async def create_review(tip: Tip):
     tip_obj = Tip(**tip)
 
     # Send the data to Kafka
-    await send_to_kafka(json.dumps(tip), key='tip')
+    send_to_kafka(json.dumps(tip))
 
     return JSONResponse(content=dict(tip_obj), status_code=201)
 
@@ -89,26 +90,19 @@ async def create_review(user: User):
     user_obj = User(**user)
 
     # Send the data to Kafka
-    await send_to_kafka(json.dumps(user), key='user')
+    send_to_kafka(json.dumps(user))
 
     return JSONResponse(content=dict(user_obj), status_code=201)
 
 
-async def send_to_kafka(value, key=None):
-    # linger_ms=500, producer will wait up to half a second before sending a batch of messages to improve performance
-    # by reducing the number of network round trips required to send messages
-
+def send_to_kafka(value):
     # Create producer
     # bootstrap_servers='localhost:9093' if we work on localhost
     # bootstrap_servers='kafka:9092' if we work on Docker
 
-    producer = KafkaProducer(
-        bootstrap_servers='kafka:9092',
-        acks=1,
-        linger_ms=500
-    )
+    producer = KafkaProducer(bootstrap_servers='kafka:9092', acks=1)
 
     # Send the message to Kafka
-    producer.send("Yelp-topic", key=bytes(key, 'utf-8') if key else None, value=bytes(value, 'utf-8'))
+    producer.send("Yelp-topic", value=bytes(value, 'utf-8'))
 
     producer.flush()

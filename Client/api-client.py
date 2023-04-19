@@ -5,7 +5,7 @@ import requests
 from pathlib import Path
 
 
-folder = Path.cwd().parent / 'dataset' / 'short_data' / 'Clean Data'
+folder = Path.cwd().parent / 'dataset' / 'Clean Data'
 files = folder.glob("*.json")
 
 # initialize a counter for successful responses
@@ -29,10 +29,9 @@ for file in files:
 
     # read the file and set starting and ending ids
     with open(file, "r") as f:
-        length = len(f.readlines())
+        end = sum(1 for line in f)
 
     start = 1
-    end = length
 
     # loop over the JSON objects in the file
     i = start
@@ -43,7 +42,7 @@ for file in files:
 
         # send the JSON object to the appropriate endpoint
         response = requests.post(endpoint, json=myjson)
-        time.sleep(5)
+        # time.sleep(0.5)
 
         # increment the counter if the response was successful
         if response.ok:

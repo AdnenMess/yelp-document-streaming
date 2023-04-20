@@ -1,10 +1,10 @@
-FROM tiangolo/uvicorn-gunicorn-fastapi:python3.10
+FROM python:3.10
 
-COPY requirements.txt /tmp/
+WORKDIR /app
 
-RUN pip install --no-cache-dir --upgrade pip && \
-    pip install --requirement /tmp/requirements.txt
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
 
 COPY ./app /app
 
-CMD streamlit run streamlitapp.py
+CMD ["uvicorn", "main_output:app", "--host", "0.0.0.0", "--port", "8084"]

@@ -1,4 +1,8 @@
-FROM python3.10
+FROM python:3.10
+
+EXPOSE 8501
+
+WORKDIR /app
 
 COPY requirements.txt /tmp/
 
@@ -7,4 +11,4 @@ RUN pip install --no-cache-dir --upgrade pip && \
 
 COPY . .
 
-CMD streamlit run streamlitapp.py
+CMD ["streamlit", "run", "app/streamlitapp.py"]

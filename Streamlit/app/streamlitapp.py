@@ -3,7 +3,7 @@ import requests
 from pandas import DataFrame
 
 # Define the base URL of the API
-API_BASE_URL = "http://localhost:8001"
+API_BASE_URL = "http://api-output:8084"
 
 # Below the first chart add an input field for the invoice number
 bus_id = st.sidebar.text_input("Business ID:")
@@ -11,7 +11,7 @@ bus_id = st.sidebar.text_input("Business ID:")
 # if enter has been used on the input field
 if bus_id:
     # Make a GET request to the API endpoint with the invoice ID
-    response = requests.get(f"{API_BASE_URL}/yelp/{bus_id}")
+    response = requests.get(f"{API_BASE_URL}/yelp/business/{bus_id}")
     # st.text(response.text)
 
     if response.ok:
@@ -34,7 +34,7 @@ usr_id = st.sidebar.text_input("User ID:")
 # if enter has been used on the input field
 if usr_id:
     # Make a GET request to the API endpoint with the invoice ID
-    response = requests.get(f"{API_BASE_URL}/yelp/{usr_id}")
+    response = requests.get(f"{API_BASE_URL}/yelp/user/{usr_id}")
     # st.text(response.text)
 
     if response.ok:
@@ -50,5 +50,5 @@ if usr_id:
         st.header("Output User ID")
         table2 = st.dataframe(data=re_indexed)
     else:
-        st.error("Failed to retrieve Business ID data")
+        st.error("Failed to retrieve User ID data")
 

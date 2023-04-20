@@ -3,7 +3,8 @@ from pathlib import Path
 from ast import literal_eval
 from json.decoder import JSONDecodeError
 
-folder = Path.cwd().parent / 'dataset' / 'short_data'
+folder = Path.cwd().parent / 'dataset'
+folder.mkdir(exist_ok=True)
 files = folder.glob("*.json")
 
 business = str(next(files))
@@ -12,10 +13,11 @@ review = str(next(files))
 tip = str(next(files))
 user = str(next(files))
 
-out_folder = Path.cwd().parent / 'dataset' / 'short_data'
-out_file_business = str(out_folder / 'Clean Data' / 'yelp_output_business.json')
-out_file_checkin = str(out_folder / 'Clean Data' / 'yelp_output_checkin.json')
-out_file_user = str(out_folder / 'Clean Data' / 'yelp_output_user.json')
+out_folder = Path.cwd().parent / 'dataset' / 'Clean Data'
+out_folder.mkdir(exist_ok=True)
+out_file_business = str(out_folder / 'yelp_output_business.json')
+out_file_checkin = str(out_folder / 'yelp_output_checkin.json')
+out_file_user = str(out_folder / 'yelp_output_user.json')
 
 
 def fix_json_formatting(input_file: str, output_file: str):

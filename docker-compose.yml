@@ -11,7 +11,7 @@ services:
       - document-streaming
 
   kafka:
-    image: 'bitnami/kafka:latest'
+    image: 'bitnami/kafka:3.2.1'
     ports:
       - '9093:9093'          #change to 9093 to access external from your windows host
     environment:

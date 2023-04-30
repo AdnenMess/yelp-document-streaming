@@ -42,7 +42,7 @@ for file in files:
 
         # send the JSON object to the appropriate endpoint
         response = requests.post(endpoint, json=myjson)
-        # time.sleep(0.5)
+        # time.sleep(2)
 
         # increment the counter if the response was successful
         if response.ok:

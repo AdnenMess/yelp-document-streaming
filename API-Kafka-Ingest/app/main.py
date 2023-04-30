@@ -100,7 +100,8 @@ def send_to_kafka(value):
     # bootstrap_servers='localhost:9093' if we work on localhost
     # bootstrap_servers='kafka:9092' if we work on Docker
 
-    producer = KafkaProducer(bootstrap_servers='kafka:9092', acks=1)
+    # All in-sync replicas have received the message (acks = -1, -1 is all)
+    producer = KafkaProducer(bootstrap_servers='kafka:9092', acks=-1)
 
     # Send the message to Kafka
     producer.send("Yelp-topic", value=bytes(value, 'utf-8'))

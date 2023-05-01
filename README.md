@@ -1,8 +1,6 @@
 
 # Yelp Document Streaming: A Data Pipeline Project
 
-![yelp](/images/Yelp.jpg)
-
 # Introduction & Goals
 
 >>This project will show how to stream, process, and visualize JSON documents from the Yelp dataset using various tools 
@@ -22,7 +20,7 @@ files, which can be very difficult and time-consuming
   - [Visualization](#visualization)
 - [Setup](#setup)
 - [Pipelines](#pipelines)
-  - [Stream Processing](#stream-processing)
+  - [Data Preprocessing](#data-preprocessing)
     - [Storing Data Stream](#storing-data-stream)
     - [Processing Data Stream](#processing-data-stream)
   - [Batch Processing](#batch-processing)
@@ -93,11 +91,38 @@ factor of 1** and the **Kafka broker** runs on **localhost:9092**. To do this :
 ```
 
 # Pipelines
-- Explain the pipelines for processing that you are building
-- Go through your development and add your source code
 
-## Stream Processing
-### Storing Data Stream
+![pipline](/images/Yelp.jpg)
+
+The upcoming posts will consist of writing about:
++ Pre-processing and cleaning of data from the Yelp dataset
++ The flow of the streaming process which includes the ingestion of data through an API, 
+the processing and storage of the data
++ Visualisation where we have an interface in the browser where the end user can use "business_id" or 
+"user_id" to query the data to be used
+
+## Data Preprocessing
+
+![transformation](/images/transformation.png)
+
+In the original Yelp dataset:
++ business.json contains an "attributes" sub-document which contains a string representation of a JSON object, 
+a "categories" attribute, and "hours" which contains a list within a string. We will transform the string 
+representation of a JSON object into a JSON object and flatten the "categories" and "hours" attributes
+
+The content of the commercial document before transformation :
+![business_before](/images/business_before_preprocessing.png)
+
+The content of the commercial document after transformation :
+![business_after](/images/business.png)
+
++ checkin.json contains the "date" attribute in which is the whole list of check-in dates.
+We assume that we do not need this list of check-in dates and will replace it with its length
+
+
++ user.json contains the attribute "friends" which contains the complete list of friends (in terms of IDs) of this user.
+We assume that we do not need this list of friends and replace it with the number of friends he has
+
 ### Processing Data Stream
 ## Batch Processing
 ## Visualizations

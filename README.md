@@ -21,9 +21,8 @@ files, which can be very difficult and time-consuming
 - [Setup](#setup)
 - [Pipelines](#pipelines)
   - [Data Preprocessing](#data-preprocessing)
-    - [Storing Data Stream](#storing-data-stream)
-    - [Processing Data Stream](#processing-data-stream)
-  - [Batch Processing](#batch-processing)
+  - [Data Stream](#data-stream)
+  - [Processing Data Stream](#processing-data-stream)
   - [Visualizations](#visualizations)
 - [Demo](#demo)
 - [Conclusion](#conclusion)
@@ -40,14 +39,23 @@ research projects
 This documentation explain the structure of business.json, review.json, user.json, checkin.json and tip.json
 
 Here the content of a **business** document
+
 ![business](/images/business.png)
+
 The content of a **review** document
+
 ![review](/images/review.png)
+
 The content of a **user** document
+
 ![user](/images/user.png)
+
 The content of a **checkin** document
+
 ![checkin](/images/checkin.png)
+
 The content of a **tip** document
+
 ![tip](/images/tip.png)
 
 # Used Tools
@@ -103,12 +111,9 @@ the processing and storage of the data
 
 ## Data Preprocessing
 
-![transformation](/images/transformation.png)
-
 In the original Yelp dataset:
-+ business.json contains an "attributes" sub-document which contains a string representation of a JSON object, 
-a "categories" attribute, and "hours" which contains a list within a string. We will transform the string 
-representation of a JSON object into a JSON object and flatten the "categories" and "hours" attributes
++ business.json contains an "attributes" sub-document which contains a string representation of a JSON object. 
+We will transform the string representation of a JSON object into a JSON object
 
 The content of the commercial document before transformation :
 ![business_before](/images/business_before_preprocessing.png)
@@ -123,22 +128,75 @@ We assume that we do not need this list of check-in dates and will replace it wi
 + user.json contains the attribute "friends" which contains the complete list of friends (in terms of IDs) of this user.
 We assume that we do not need this list of friends and replace it with the number of friends he has
 
-### Processing Data Stream
-## Batch Processing
+Detail of transforming : [Transforming](Client/Transforming.py)
+
+## Data Stream
+
+![transformation](/images/transformation.png)
+
++ We created a json collection that can be imported into postman to test the schema and the data sent to the API. 
+
+Detail of json collection : [IngestAPI-TEST](API-Kafka-Ingest/Postman/IngestAPI-Test.postman_collection.json)
+
++ We created an API client that reads the json files and sends them to the API line by line (document by document)
+
+Detail of the API client : [API-client](Client/api-client.py)
+
+## Processing Data Stream
+
+![processing](images/ingestion.png)
+
++ We created a fastAPI to ingest data from the client API and send it to a Kafka producer
+
+Detail of the FastAPI : [API-Kafka](API-Kafka-Ingest/app/main.py)
+
++ We create a python script in pyspark that consumes the data from the kafka producer. In the same script, 
+we set up a connection to mongodb for reading and writing
+
+
++ In pyspark, we convert the time from a string to GMT, and we have renamed some of the column names because
+in the original files, some columns have the same name with different content
+
+
++ The main objective of the processing is to retrieve the line (document) from Kafka and see if it matches the mongodb 
+database using the key "business-id" or "user-id".
+So, if the key matches, we will join the upcoming data with the mongodb database otherwise we will simply insert
+this line in mongodb
+
+Detail of the Pyspark script : [Pyspark](ApacheSpark/02-streaming-kafka-src-dst-mongodb.ipynb)
+
++ For security reasons, we created a FastAPI to get all the necessary data from mongodb
+
+Detail of the FastAPI : [API-Streamlit](API-Streamlit-output/app/main_output.py)
+
 ## Visualizations
 
+![visualization](images/visualization.png)
+
++ We have created a streamlit application that retrieves data from the FastAPI connected to mongodb and displays 
+some columns in a table. We can find any information using "business-id" or "user-id"
+
+Detail of the Streamlit application : [Streamlit](Streamlit/app/streamlitapp.py)
+
 # Demo
-- You could add a demo video here
-- Or link to your presentation video of the project
+
++ Here is an example of what the final application will look like. We can get the same information by 
+searching for "business-id" or "user-id" because the data is merged
+
+![demo](images/streamlit.png)
 
 # Conclusion
-Write a comprehensive conclusion.
-- How did this project turn out
-- What major things have you learned
-- What were the biggest challenges
+Overall, I found this to be a very interesting project to explore. The key here is to merge json files into a single
+NoSQL database. I have done with this project using many services, from ingestion to visualization. We can improve 
+this project by adding authentication for the API for more security, or we can choose to work with a data frame that 
+is stored in OFF HEAP, in MEMORY ONLY or in MEMORY AND DISK instead of reading the data from mongodb. The challenge 
+for me would be the documentation, it is quite difficult to document your project in the best way possible so that 
+other people can easily find their way around. However, for me, this project is a kick-start to understand more deeply
+how data engineering works
 
 # Follow Me On
-Add the link to your LinkedIn Profile
++ Github: [@AdnenMess](https://github.com/AdnenMess)
++ LinkedIn: [@messaoudi-adnen](https://www.linkedin.com/in/messaoudi-adnen-8a513815/)
 
 # Appendix
 
